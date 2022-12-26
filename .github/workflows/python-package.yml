@@ -32,8 +32,8 @@ jobs:
         python "crawler.py"
     - name: Commits
       run: |
-        git config --local user.email "highcolor_12@naver.com
-        git config --local user.name "Kimbangul"
+        git config user.email "highcolor_12@naver.com
+        git config user.name "Kimbangul"
         git add articles.json
         git commit -m "chore: auto update data" # 커밋 메세지
     - name: Push
