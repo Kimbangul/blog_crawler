@@ -1,3 +1,4 @@
+import json
 import requests
 from bs4 import BeautifulSoup as bs
 from lxml import etree
@@ -26,6 +27,17 @@ class Article:
     context: str
     date: str
     tags: list[str]
+
+    def to_dict(self):
+        data = {}
+        data.update(
+            href=str(self.href),
+            headline=str(self.headline),
+            context=str(self.context),
+            date=str(self.date),
+            tags=str(self.tags)
+        )
+        return data
 
     def __init__(self, elem: etree._Element):
         head: list[etree._Element] = elem.xpath("a[2]")
@@ -59,12 +71,15 @@ def get_articles():
         articles.append(Article(elem))
     return articles
 
+def to_json(data):
+    with open('articles.json','w+',encoding="utf-8",) as file:
+            print(data)
+            file.write(json.dumps(data, indent=4,ensure_ascii=False))
+        
 
 if __name__ == "__main__":
-    heads = get_articles()
-    for article in heads:
-        print("===================")
-        print(article.headline)
-        print(article.context)
-        print(article.tags)
-        print(article.date)
+    articles = get_articles()
+    article_data = []
+    for article in articles:
+        article_data.append(article.to_dict())
+    to_json(article_data)
