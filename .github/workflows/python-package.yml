@@ -1,0 +1,46 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Blog-crawler
+
+on:
+  schedule:
+    - cron:  '* */24 * * *'
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.9", "3.10"]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Lint with flake8
+      run: |
+        python "crawler.py"
+    - name: Commits
+      run: |
+        git config --local user.email "highcolor_12@naver.com
+        git config --local user.name "Kimbangul"
+        git add articles.json
+        git commit -m "chore: auto update data" # 커밋 메세지
+    - name: Push
+      uses: ad-m/blog_crawler@master
+      with:
+        branch: 'main'
+        github_token: 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
