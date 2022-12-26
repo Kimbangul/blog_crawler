@@ -40,7 +40,7 @@ jobs:
         git add articles.json
         git commit -m "chore: auto update data" # 커밋 메세지
     - name: Push
-      uses: ad-m/blog_crawler@master
+      uses: Kimbangul/blog_crawler@master
       with:
         branch: 'main'
         github_token: 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
