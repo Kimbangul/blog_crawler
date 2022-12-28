@@ -17,9 +17,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: Kimbangul/blog_crawler@main
     - name: Set up Python 3.x
-      uses: actions/setup-python@v1
+      uses: Kimbangul/blog_crawler@main
       with:
           python-version: '3.x'
           architecture: 'x64'
